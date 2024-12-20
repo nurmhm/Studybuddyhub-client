@@ -24,7 +24,7 @@ const Create = () => {
 
       const assignment = { title, description, mark, photourl, diffrculty, date, email };
 
-      axios.post(`http://localhost:9000/assignments`, assignment)
+      axios.post(`${import.meta.env.VITE_API_URL}/assignments`, assignment)
          .then(res => {
             if (res.data._id) {
                toast.success("🎉 Assignment created successfully!");

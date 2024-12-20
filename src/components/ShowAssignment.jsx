@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import AssignCart from "./AssignCart";
 import { AuthContext } from "../providers/AuthProvider";
 import { FaFilter } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const ShowAssignment = () => {
    const { user } = useContext(AuthContext);
@@ -13,7 +14,7 @@ const ShowAssignment = () => {
 
    useEffect(() => {
       setLoading(true);
-      axios.get(`http://localhost:9000/assignments`)
+      axios.get(`${import.meta.env.VITE_API_URL}/assignments`)
          .then(res => {
             setAssignments(res.data);
             setFilteredAssignments(res.data);
@@ -42,7 +43,7 @@ const ShowAssignment = () => {
       }
       const proceed = window.confirm("Are you sure you want to delete this assignment?");
       if (proceed) {
-         axios.delete(`http://localhost:9000/delete/${id}`)
+         axios.delete(`${import.meta.env.VITE_API_URL}/delete/${id}`)
             .then(res => {
                if (res.data.deletedCount > 0) {
                   const remaining = filteredAssignments.filter(assignment => assignment._id !== id);
@@ -103,15 +104,24 @@ const ShowAssignment = () => {
             </div>
          </div>
 
-         {/* Assignment Cards */}
+         {/* Assignment Cards with Motion */}
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAssignments?.length > 0 ? (
-               filteredAssignments.map(assignment => (
-                  <AssignCart
+               filteredAssignments.map((assignment, index) => (
+                  <motion.div
                      key={assignment._id}
-                     assignment={assignment}
-                     handleDelete={handleDelete}
-                  />
+                     initial={{ opacity: 0, y: 50 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{
+                        delay: index * 0.1, // Adds stagger effect
+                        duration: 0.5,
+                     }}
+                  >
+                     <AssignCart
+                        assignment={assignment}
+                        handleDelete={handleDelete}
+                     />
+                  </motion.div>
                ))
             ) : (
                <div className="col-span-full text-center text-lg font-semibold text-[#004643]">

@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         path: '/view/:id',
         element:  <PrivateRoute><Viewdelitlis></Viewdelitlis></PrivateRoute>,
         // loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/update/${params.id}`).then(res => res.json())
-        loader: ({ params }) => fetch(`http://localhost:9000/update/${params.id}`).then(res => res.json())
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/update/${params.id}`).then(res => res.json())
 
       }
       ,
