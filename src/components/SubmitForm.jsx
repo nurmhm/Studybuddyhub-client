@@ -4,87 +4,93 @@ import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-
 const SubmitForm = () => {
-   const assignment = useLoaderData();
-  //  console.log(assignment)
-   const {user} = useContext(AuthContext)
+  const assignment = useLoaderData();
+  const { user } = useContext(AuthContext);
 
-   const handleSubmit = e=>{
-      e.preventDefault();
-      const form = e.target;
-      const pdf= form.pdf.value;
-      const note = form.note.value;
-      const submit = {
-        pdf,
-        note,
-        assignmentId: assignment._id,
-        title: assignment.title,
-        mark:0,
-        creater:assignment.email,
-        examineeEmail: user.email,
-        status: 'pandding'
-        
-      }
-      try {
-         axios.post(`${import.meta.env.VITE_API_URL}/submitted`,submit)
-            .then(res=>{
-               if(res.data.acknowledged){
-                  toast.success('Submitted Successfully')
-                  form.reset()
-               }
-            
-            })
-            .catch(err => {
-               console.log(err)
-            })
-         
-      } catch (error) {
-         console.log(error)
-      }
-      // console.log("submitted",submit)
-   
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const pdf = form.pdf.value;
+    const note = form.note.value;
 
-   }
-   return (
-      <div className="container mx-auto px-6 py-4">
-      <h2 className="text-3xl font-bold text-gray-900">Submit Assignment</h2>
-      <form onSubmit={handleSubmit} className="mt-6">
+    const submit = {
+      pdf,
+      note,
+      assignmentId: assignment._id,
+      title: assignment.title,
+      mark: 0,
+      creater: assignment.email,
+      examineeEmail: user.email,
+      status: "pending",
+    };
+
+    try {
+      axios
+        .post(`${import.meta.env.VITE_API_URL}/submitted`, submit)
+        .then((res) => {
+          if (res.data.acknowledged) {
+            toast.success("Submitted Successfully!");
+            form.reset();
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          toast.error("Failed to submit. Please try again.");
+        });
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred.");
+    }
+  };
+
+  return (
+    <div className="container mx-auto px-6 py-12 max-w-4xl">
+      <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-8">
+        Submit Your Assignment
+      </h2>
+      <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8">
         <div className="mb-6">
-          <label htmlFor="pdf" className="block mb-2 text-sm font-bold text-gray-900">
-            PDF LINk or DOCS LINK
+          <label
+            htmlFor="pdf"
+            className="block text-lg font-medium text-gray-700 mb-2"
+          >
+            PDF Link or Docs Link
           </label>
           <input
             type="text"
             id="pdf"
             name="pdf"
             required
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="Enter the PDF or Docs link"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="note" className="block mb-2 text-sm font-bold text-gray-900">
-            NOTE
+          <label
+            htmlFor="note"
+            className="block text-lg font-medium text-gray-700 mb-2"
+          >
+            Note (Optional)
           </label>
-          <input
-            type="text"
+          <textarea
             id="note"
             name="note"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          />
+            rows="4"
+            placeholder="Add any notes or additional details (optional)"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          ></textarea>
         </div>
-       
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full py-3 bg-[#004643] hover:bg-[#008c6d] text-white font-semibold rounded-lg shadow-md transition duration-300"
         >
-          Submit
+          Submit Assignment
         </button>
       </form>
-      <ToastContainer></ToastContainer>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
-    
-   );
+  );
 };
 
 export default SubmitForm;
