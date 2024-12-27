@@ -11,9 +11,9 @@ const ShowAssignment = () => {
    const [filteredAssignments, setFilteredAssignments] = useState([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
-
+    console.log("this is me ")
    useEffect(() => {
-      setLoading(true);
+      setLoading(true);  
       axios.get(`${import.meta.env.VITE_API_URL}/assignments`)
          .then(res => {
             setAssignments(res.data);
