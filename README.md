@@ -17,7 +17,7 @@ View Assignments: Public page displaying all assignments created by users, with 
 - Frontend: React.js, HTML5, CSS3, React Router
 - Backend: Node.js, Express.js, MongoDB
 - Authentication: JWT (JSON Web Tokens)
-- Deployment: Firebase (Client-side), Vercel (Server-side)
+- Deployment: Vercel 
 
 
 # Live Demo
