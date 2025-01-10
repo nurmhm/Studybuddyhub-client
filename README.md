@@ -22,4 +22,4 @@ View Assignments: Public page displaying all assignments created by users, with 
 
 # Live Demo
 
-- live link (https://boisterous-halva-76f58b.netlify.app/)
+- live link (https://studybuddyhub-client.vercel.app/)
