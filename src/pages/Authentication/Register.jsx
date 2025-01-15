@@ -1,11 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom'
 import bgImg from '../../assets/images/login.jpg'
 import logo from '../../assets/images/logo.png'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext } from '../../providers/AuthProvider'
 import toast from 'react-hot-toast'
+import axios from 'axios'
 const Registration = () => {
   const navigate = useNavigate()
+  // const [exsitingUser, setExsitingUser] = useState(null)
+
+  // axios.get(`${import.meta.env.VITE_API_URL}/users`)
+  //   .then(res => {
+  //     setExsitingUser(res.data)
+  // })
+  console.log(exsitingUser);
   const { signInWithGoogle, createUser, updateUserProfile, user, setUser } =
     useContext(AuthContext)
 
@@ -57,8 +65,21 @@ const Registration = () => {
         await updateUserProfile(name, photo)
         setUser({ ...user, photoURL: photo, displayName: name })
         const userr = result.user
-        
-        console.log(userr)
+        const newUser = { name, email, photo, pass ,basic_info:false,}
+        console.log( newUser);
+
+
+        // 3. Save user to the database
+        axios.post(`${import.meta.env.VITE_API_URL}/users`, newUser)
+          .then(res => {
+            if (res.data.insertedId) {
+              toast.success('Signup Successful')
+              form.reset()
+
+            } else {
+              toast.error('Signup Failed')
+            }
+          })
         // navigate('/')
         toast.success('Signup Successful')
       } catch (err) {
