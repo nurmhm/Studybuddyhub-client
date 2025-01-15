@@ -9,35 +9,35 @@ const Registration = () => {
   const { signInWithGoogle, createUser, updateUserProfile, user, setUser } =
     useContext(AuthContext)
 
-    const validatePassword = (password) => {
-      const minLength = 8;
-      const hasUpperCase = /[A-Z]/.test(password);
-      const hasLowerCase = /[a-z]/.test(password);
-      const hasNumbers = /\d/.test(password);
-      const hasNonalphas = /\W/.test(password);
-    
-      if (password.length < minLength) {
-        alert(`Password must be at least ${minLength} characters long.`);
-        return false;
-      }
-      if (!hasUpperCase) {
-        alert("Password must contain at least one uppercase letter.");
-        return false;
-      }
-      if (!hasLowerCase) {
-        alert("Password must contain at least one lowercase letter.");
-        return false;
-      }
-      if (!hasNumbers) {
-        alert("Password must contain at least one number.");
-        return false;
-      }
-      if (!hasNonalphas) {
-        alert("Password must contain at least one special character.");
-        return false;
-      }
-      return true;
-    };
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasNonalphas = /\W/.test(password);
+
+    if (password.length < minLength) {
+      alert(`Password must be at least ${minLength} characters long.`);
+      return false;
+    }
+    if (!hasUpperCase) {
+      alert("Password must contain at least one uppercase letter.");
+      return false;
+    }
+    if (!hasLowerCase) {
+      alert("Password must contain at least one lowercase letter.");
+      return false;
+    }
+    if (!hasNumbers) {
+      alert("Password must contain at least one number.");
+      return false;
+    }
+    if (!hasNonalphas) {
+      alert("Password must contain at least one special character.");
+      return false;
+    }
+    return true;
+  };
 
   const handleSignUp = async e => {
     e.preventDefault()
@@ -46,22 +46,28 @@ const Registration = () => {
     const name = form.name.value
     const photo = form.photo.value
     const pass = form.password.value
-    validatePassword(pass)
+    console.log(validatePassword(pass))
 
-    
-    // console.log({ email, pass, name, photo })
-    try {
-      //2. User Registration
-      const result = await createUser(email, pass)
-      // console.log(result)
-      await updateUserProfile(name, photo)
-      setUser({ ...user, photoURL: photo, displayName: name })
-      navigate('/')
-      toast.success('Signup Successful')
-    } catch (err) {
-      console.log(err)
-      toast.error(err?.message)
+    if (!validatePassword(pass)) {
+      return
+    } else {
+      try {
+        // 2. User Registration
+        const result = await createUser(email, pass)
+        await updateUserProfile(name, photo)
+        setUser({ ...user, photoURL: photo, displayName: name })
+        const userr = result.user
+        
+        console.log(userr)
+        // navigate('/')
+        toast.success('Signup Successful')
+      } catch (err) {
+        console.log(err)
+        toast.error(err?.message)
+      }
     }
+
+
   }
 
   // Google Signin
@@ -75,6 +81,7 @@ const Registration = () => {
       toast.error(err?.message)
     }
   }
+
 
   return (
     <div className='flex justify-center items-center min-h-[calc(100vh-306px)] my-12'>

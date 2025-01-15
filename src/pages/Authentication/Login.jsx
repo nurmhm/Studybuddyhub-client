@@ -12,7 +12,7 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
-      toast.success('Signin Successful')
+      toast.success('Signin Successful with Google')
       navigate('/')
     } catch (err) {
       console.log(err)
@@ -30,7 +30,7 @@ const Login = () => {
     try {
       //User Login
       const result = await signIn(email, pass)
-      // console.log(result)
+      console.log(result)
       navigate('/')
       toast.success('Signin Successful')
     } catch (err) {
