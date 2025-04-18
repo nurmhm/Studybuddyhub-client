@@ -68,7 +68,7 @@ const AssignmentsHighlight = () => {
                       Due: {assignment.date}
                     </span>
                     <a
-                      href={assignment.link}
+                      href={`/view/${assignment._id}`}
                       className="inline-flex items-center text-[#004643] font-semibold border-2 border-[#004643] px-4 py-2 rounded-lg hover:bg-[#004643] hover:text-white transition group"
                     >
                       View Assignment
