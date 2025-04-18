@@ -67,8 +67,8 @@ export default function App() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#004643] to-[rgba(0, 70, 67, 0.7)]"></div>
 
               {/* Content */}
-              <div className="absolute inset-0 flex items-center justify-start pl-10 md:pl-20">
-                <div className="max-w-lg text-left text-[#FAF3DD] space-y-6">
+              <div className="absolute inset-0 flex items-center justify-start  pl-10 md:pl-52 container">
+                <div className=" text-left text-[#FAF3DD] space-y-6">
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
                     <TypeAnimation
                       sequence={[
